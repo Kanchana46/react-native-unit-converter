@@ -1,20 +1,35 @@
-import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
+import React, { useState } from 'react';
+import Constants from 'expo-constants'
+import MeasureView from './components/MeasureView';
+import HeaderView from './components/HeaderView';
 
-export default function App() {
+const App = () => {
+  const [value, setValue] = useState('0');
+  const renderScene = ({ route }) => {
+    return <MeasureView measure={route.key} route={route.key} value={value} setValue={setValue} />
+  }
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
+    <View style={[styles.scene, { marginTop: Constants.statusBarHeight }]}>
+      <Text style={styles.title}>Unit Converter</Text>
+      <HeaderView renderScene={renderScene} />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+  scene: {
+    flex: 1
   },
+  title: {
+    padding: 15,
+    fontWeight: 'bold',
+    color: '#052F5F',
+    fontSize: 20,
+    textAlign: 'center',
+    textTransform: 'uppercase'
+  }
 });
+
+export default App;
